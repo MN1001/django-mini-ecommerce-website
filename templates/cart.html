@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+<h3 class="your-cart">Your Cart</h3>
+
+{% if data %}
+<div class="cart-table">
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in data %}
+      <tr>
+        <td>{{ i.product.name }}</td>
+        <td>{{ i.product.price }}</td>
+        <td>{{ i.quantity }}</td>
+        <td>
+          <a href="{% url 'shop_cart:cartdel' i.id %}" class="btn btn-danger btn-sm">
+            Remove
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+{% else %}
+  <p class="empty-cart">Your cart is empty</p>
+{% endif %}
+<button class="buyall-button" type="submit"><a href="">Proceed to Buy</a></button>
+<button class="remove-all-button" type="submit"><a href="">Remove all</a></button>
+
+{% endblock %}
