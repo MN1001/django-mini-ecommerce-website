@@ -1,6 +1,38 @@
-<h2>Login</h2>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-</form>
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+  <div class="auth-card">
+
+    <h4 class="text-center mb-3">Login</h4>
+
+    <form method="post">
+      {% csrf_token %}
+
+      {% for field in form %}
+        <div class="mb-3">
+          <label class="form-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <div class="text-danger small">
+              {{ field.errors|striptags }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="btn btn-primary w-100">
+        Login
+      </button>
+    </form>
+
+    <p class="text-center mt-3 small">
+      Don't have an account?
+      <a href="{% url 'users:register' %}">Register</a>
+    </p>
+
+  </div>
+</div>
+{% endblock %}

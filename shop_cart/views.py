@@ -17,8 +17,22 @@ def addtocart(request,id):
 
 @login_required
 def cartview(request):
-    p = Cart.objects.filter(user=request.user)
-    return render(request,'cart.html',{'data':p})
+    cart_items = Cart.objects.filter(user=request.user)
+
+    total = 0
+    for item in cart_items:
+        item.subtotal = item.product.price * item.quantity
+        total += item.subtotal
+
+    return render(
+        request,
+        'cart.html',
+        {
+            'data': cart_items,
+            'total': total
+        }
+    )
+
 
 @login_required
 def cartdel(request,id):

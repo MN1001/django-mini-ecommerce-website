@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container mt-4" style="max-width:600px">
+
+  <h3 class="mb-4 text-center">Checkout</h3>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <!-- ADDRESS -->
+    <div class="mb-3">
+      <label class="form-label">Delivery Address</label>
+      <textarea
+        name="address"
+        class="form-control"
+        rows="3"
+        required
+      ></textarea>
+    </div>
+
+    <!-- PAYMENT METHOD -->
+    <div class="mb-3">
+      <label class="form-label">Payment Method</label>
+
+      <select name="payment_method" class="form-select" required>
+        <option value="CARD">Card (Stripe)</option>
+        <option value="UPI">UPI (Stripe)</option>
+        <option value="COD">Cash on Delivery</option>
+      </select>
+
+      <small class="text-muted">
+        Card & UPI payments are processed securely via Stripe.
+      </small>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">
+      Proceed
+    </button>
+  </form>
+
+</div>
+{% endblock %}

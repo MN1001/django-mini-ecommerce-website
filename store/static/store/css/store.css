@@ -1,11 +1,11 @@
-/* ========== GLOBAL ========== */
+/* ===== GLOBAL ===== */
 body {
   background-color: #f8f9fa;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: #212529;
 }
 
-/* ========== NAVBAR ========== */
+/* ===== NAVBAR ===== */
 .navbar {
   background-color: #ffffff !important;
   border-bottom: 1px solid #e5e7eb;
@@ -13,19 +13,22 @@ body {
 
 .navbar-brand {
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
 }
 
-.navbar .form-control {
-  width: 280px;
-}
-
-/* ========== PAGE HEADINGS ========== */
-h4 {
+/* Cart button */
+.cart-btn {
+  border-radius: 8px;
   font-weight: 600;
+  padding: 6px 14px;
 }
 
-/* ========== PRODUCT GRID ========== */
+.cart-btn:hover {
+  background-color: #212529;
+  color: #fff;
+}
+
+/* ===== PRODUCT CARDS ===== */
 .card {
   border: none;
   border-radius: 14px;
@@ -36,10 +39,9 @@ h4 {
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
 }
 
-/* Product image */
 .card-img-top {
   height: 200px;
   object-fit: contain;
@@ -47,7 +49,6 @@ h4 {
   background-color: #fafafa;
 }
 
-/* No image fallback */
 .no-image {
   height: 200px;
   background-color: #f1f3f5;
@@ -55,90 +56,118 @@ h4 {
   align-items: center;
   justify-content: center;
   color: #868e96;
-  font-size: 0.9rem;
-}
-
-/* Card body */
-.card-body {
-  display: flex;
-  flex-direction: column;
 }
 
 .card-title {
   font-size: 0.95rem;
   font-weight: 600;
-  margin-bottom: 6px;
 }
 
 .card-text {
   font-size: 0.85rem;
   color: #6c757d;
-  margin-bottom: 8px;
 }
 
-/* Price */
-.card-body p.fw-bold {
-  font-size: 1rem;
-  margin-top: auto;
-  margin-bottom: 10px;
-}
-
-/* ========== BUTTONS ========== */
+/* ===== BUTTONS ===== */
 .btn-primary {
   border-radius: 10px;
   font-weight: 600;
-  padding: 8px 0;
 }
 
-.btn-primary:hover {
-  background-color: #0b5ed7;
+/* ===== CART PAGE ===== */
+.cart-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  padding: 24px;
 }
 
-/* ========== RESPONSIVE ========== */
-@media (max-width: 768px) {
-  .navbar .form-control {
-    width: 180px;
-  }
+.cart-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
 
-  .card-img-top {
-    height: 180px;
-  }
+.cart-total {
+  text-align: right;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 10px;
 }
 
 .empty-cart {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 18px;
-    color: #666;
-}
-.your-cart {
   text-align: center;
-  font-size: 40px;
-  margin-top: 20px;
-  font-weight: bold;
+  font-size: 18px;
+  color: #6c757d;
+  margin-top: 40px;
 }
 
-.cart-table{
-  margin-left: 14%;
-  margin-right: 2%;
-  width: 70%;
-  box-shadow: #666 0 0 4px;
-  border: solid 1px;
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .card-img-top {
+    height: 180px;
+  }
+
+  .cart-wrapper {
+    padding: 16px;
+  }
+}
+
+/* ===== AUTH PAGES (LOGIN / REGISTER) ===== */
+
+.auth-wrapper {
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-card {
+  width: 400px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  padding: 30px;
+}
+
+.auth-card h4 {
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.auth-card label {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.auth-card input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+}
+
+.auth-card input:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 2px rgba(13,110,253,0.15);
+}
+
+.auth-card button {
+  margin-top: 10px;
   border-radius: 10px;
-  padding-left: 2%;
-  background-color: white;
+  font-weight: 600;
 }
 
-.buyall-button{
+.auth-card p {
+  font-size: 14px;
+}
+
+.auth-card a {
   text-decoration: none;
-}
-
-.remove-all-button{
-  text-decoration: none;
-}
-
-.no-product{
-  text-align: center;
-  font-size: 50px;
-  font-weight: bold;
+  font-weight: 600;
 }
