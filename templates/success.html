@@ -1,14 +1,24 @@
 {% extends 'base.html' %}
-{% block title %}Order Successful{% endblock %}
+{% block title %}Order Status{% endblock %}
 
 {% block content %}
 <div class="container mt-5 text-center">
-  <h2 class="text-success">Payment Successful ✅</h2>
+
+  {% if order.is_paid %}
+      <h2 class="text-success">Payment Successful ✅</h2>
+      <p class="fw-bold text-success">Status: Paid</p>
+      <p>Total Paid: ₹ {{ order.total_price }}</p>
+  {% else %}
+      <h2 class="text-warning">Order Placed 👍</h2>
+      <p class="fw-bold text-warning">Status: Pending</p>
+      <p>Total Amount: ₹ {{ order.total_price }}</p>
+  {% endif %}
+
   <p>Order ID: {{ order.id }}</p>
-  <p>Total Paid: ₹ {{ order.total_price }}</p>
 
   <a href="{% url 'store:home' %}" class="btn btn-primary mt-3">
     Continue Shopping
   </a>
+
 </div>
 {% endblock %}

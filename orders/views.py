@@ -21,9 +21,12 @@ def checkout(request):
         address = request.POST.get('address')
         payment_method = request.POST.get('payment_method')
 
+        if payment_method not in ["CARD", "COD"]:
+            return redirect('shop_cart:cart')
+
+
         total = sum(item.product.price * item.quantity for item in cart_items)
 
-        # create order
         order = Order.objects.create(
             user=request.user,
             address=address,
@@ -32,10 +35,7 @@ def checkout(request):
             is_paid=False
         )
 
-        line_items = []
-
         for item in cart_items:
-            # save order items
             OrderItem.objects.create(
                 order=order,
                 product=item.product,
@@ -43,31 +43,36 @@ def checkout(request):
                 price=item.product.price
             )
 
-            # stripe line items
-            line_items.append({
-                'price_data': {
-                    'currency': 'inr',
-                    'product_data': {
-                        'name': item.product.name,
+        if payment_method == "CARD":
+            line_items = []
+
+            for item in cart_items:
+                line_items.append({
+                    'price_data': {
+                        'currency': 'inr',
+                        'product_data': {
+                            'name': item.product.name,
+                        },
+                        'unit_amount': int(item.product.price * 100),
                     },
-                    'unit_amount': int(item.product.price * 100),
-                },
-                'quantity': item.quantity,
-            })
+                    'quantity': item.quantity,
+                })
 
-        session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            line_items=line_items,
-            mode='payment',
-            success_url=request.build_absolute_uri(
-                reverse('orders:success', args=[order.id])
-            ),
-            cancel_url=request.build_absolute_uri(
-                reverse('orders:cancel')
-            ),
-        )
+            session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=line_items,
+                mode='payment',
+                success_url=request.build_absolute_uri(
+                    reverse('orders:success', args=[order.id])
+                ),
+                cancel_url=request.build_absolute_uri(
+                    reverse('orders:cancel')
+                ),
+            )
 
-        return redirect(session.url)
+            return redirect(session.url)
+        elif payment_method == "COD":
+            return redirect('orders:success', order.id)
 
     return render(request, 'checkout.html', {'cart_items': cart_items})
 
@@ -75,8 +80,9 @@ def checkout(request):
 @login_required
 def success(request, order_id):
     order = get_object_or_404(Order, id=order_id, user=request.user)
-    order.is_paid = True
-    order.save()
+    if order.payment_method == "CARD":
+        order.is_paid = True
+        order.save()
 
     Cart.objects.filter(user=request.user).delete()
     return render(request, 'success.html', {'order': order})
